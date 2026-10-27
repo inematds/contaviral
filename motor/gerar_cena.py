@@ -120,7 +120,11 @@ NUMW = {"zero", "um", "uma", "dois", "duas", "tres", "quatro", "cinco", "seis", 
         "quatorze", "catorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove", "vinte", "trinta", "quarenta", "cinquenta",
         "sessenta", "setenta", "oitenta", "noventa", "cem", "cento", "duzentos", "duzentas", "trezentos", "trezentas", "quatrocentos",
         "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos", "mil", "milhao", "milhoes", "bilhao", "bilhoes", "trilhao", "trilhoes", "virgula", "porcento"}
-TELA = {r"\bésse ú ésse\b": "SUS", r"\binema ponto club\b": "inema.club", r"\binema club\b": "inema.club"}
+# contaviral (27/10/2026): siglas do contábil vão faladas na voz e escritas na legenda
+TELA = {r"\bésse ú ésse\b": "SUS", r"\bcê bê ésse\b": "CBS", r"\bí bê ésse\b": "IBS", r"\bí ene ésse ésse\b": "INSS",
+        r"\bdê érre é\b": "DRE", r"\bcê ene pê jota\b": "CNPJ", r"\bcê érre cê\b": "CRC", r"\bcê éfe cê\b": "CFC",
+        r"\béfe gê tê ésse\b": "FGTS", r"\bí pê í\b": "IPI", r"\bí cê ême ésse\b": "ICMS", r"\bispédi\b": "SPED",
+        r"\bméis\b": "MEIs", r"\bméi\b": "MEI", r"\bdás\b": "DAS", r"\binema ponto club\b": "inema.club", r"\binema club\b": "inema.club"}
 
 
 def chamada(hero):
