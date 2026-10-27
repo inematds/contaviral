@@ -1,0 +1,9 @@
+[Unit]
+Description=contaviral — domingo às 10:00
+
+[Timer]
+OnCalendar=Sun *-*-* 10:00:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target

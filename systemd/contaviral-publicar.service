@@ -1,0 +1,9 @@
+[Unit]
+Description=contaviral — publica no lives2 (INEMA TIA) o que a geração das 10h deixou pronto
+After=network-online.target
+
+[Service]
+Type=oneshot
+Environment=PATH=%h/.local/bin:%h/.npm-global/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/bin/bash %h/projetos/contaviral/auto/publicar-pendente.sh
+TimeoutStartSec=3h

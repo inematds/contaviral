@@ -1,0 +1,17 @@
+{
+  "_como_editar": "Para incluir ou tirar alguém, edite esta lista (ou peça ao Claude). 'ativo': false pausa sem apagar. 'handle' é o caminho do canal no YouTube (@handle ou channel/UC...). 'lang' é a língua do canal para o Whisper (padrão pt). Quem entra por sugestão do sistema precisa ser canal consolidado de contabilidade ou tributos (contador, professor, instituição, com anos de canal e audiência medida), nunca emergente, nunca quem vende curso como conteúdo principal ou promete 'pagar menos imposto'; a sugestão vem no bot e só entra com o ok do Nei.",
+  "_ranking": "Medição própria com yt-dlp em 27/10/2026: mediana de views dos últimos 15 vídeos, canal ativo e falado. Os nomes da lista do Nei com canal ativo entram (Fellipe Guerra, Paulo Henrique Pêgas pelo IPECRJ TV); o resto foi completado pelos maiores canais ativos de contabilidade, tributos e MEI. Ver pesquisa/canais.md.",
+  "_nota": "A Receita Federal é fonte oficial, não influenciador: entra porque novas regras, portarias e a Reforma Tributária são assunto-alvo. O roteiro atribui tudo, diz quando algo é proposta e fecha com 'Não substitui orientação de um contador.' (auto/roteiro.md).",
+  "canais": [
+    {"handle": "channel/UCcPFg64-I6jC0Y3kU_Dcvpw", "nome": "Central do Microempreendedor", "rk": "MEI · SIMPLES", "ativo": true},
+    {"handle": "channel/UCfkDhlL4vSazeBvLhPBD4iw", "nome": "Sua Contadora", "rk": "CONTABILIDADE · MEI", "ativo": true},
+    {"handle": "channel/UCq761aMEc2uO1u0o0_g9Wdw", "nome": "Flávia Holanda Gaeta", "rk": "REFORMA TRIBUTÁRIA", "ativo": true},
+    {"handle": "channel/UCTCyYx05OU6MgRzaJ-NLLLg", "nome": "Gerando Empreendedores", "rk": "MEI · EMPRESAS", "ativo": true},
+    {"handle": "channel/UCGRjKGDOpQgaFpniolo3kvg", "nome": "Tenha Renda", "rk": "MEI", "ativo": true},
+    {"handle": "channel/UCSmqryETeDHdYEenRVhWWTA", "nome": "Econet Editora", "rk": "LEGISLAÇÃO · IBS/CBS", "ativo": true},
+    {"handle": "channel/UCxvF7sWmIygW0zCZa7N947Q", "nome": "Receita Federal", "rk": "FONTE OFICIAL", "ativo": true},
+    {"handle": "channel/UCdxWVuRlsJq6RHmKvo5-G3w", "nome": "Contabilidade Facilitada", "rk": "CONTABILIDADE", "ativo": true},
+    {"handle": "channel/UCTRVlQTzYPK88F8saQL9TJQ", "nome": "Fellipe Guerra", "rk": "REFORMA TRIBUTÁRIA · CFC", "ativo": true},
+    {"handle": "channel/UCBmKmcCtjgDOf1evsAd8rjQ", "nome": "Paulo Henrique Pêgas", "rk": "CONTABILIDADE TRIBUTÁRIA", "ativo": true}
+  ]
+}
