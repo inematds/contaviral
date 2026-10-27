@@ -19,3 +19,4 @@ When I correct you, or you catch yourself making a mistake: before continuing, a
 ## Lessons
 
 - (Herdadas do futviral/advviral/finviral, mesmo motor.) Tratar por "você"; CTA só inema.club; números por extenso na fala; âncora `em` em palavra comum; citação literal do transcript; cadeia longa por `systemd-run --user`; não editar .sh com rodada em execução (editar cópia e trocar com `mv`); voz do HeyGen mixada a -14 LUFS.
+- Sigla falada no roteiro ("cê bê ésse") precisa de equivalência nos dois lugares: `motor/narrar.py` (`_SIGLAS`, conferência da voz contra o Whisper) e `motor/gerar_cena.py` (`TELA`, legenda escrita). Sigla nova no roteiro → acrescentar nos dois. (27/10/2026)
