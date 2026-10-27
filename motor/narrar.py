@@ -8,6 +8,24 @@ from pathlib import Path
 sys.path.insert(0, str(Path.home() / "projetos/cardshorts"))
 import cardshorts as cs
 
+# Siglas do contábil vão faladas no roteiro ("cê bê ésse") e o Whisper escreve a sigla ("CBS"): a conferência
+# de fidelidade do cardshorts reprovava a voz certa (82–84% < 85%, 27/10/2026). Normaliza os dois lados.
+_SIGLAS = [("i be esse", "ibs"), ("ce be esse", "cbs"), ("i ene esse esse", "inss"), ("de erre e", "dre"),
+           ("ce ene pe jota", "cnpj"), ("ce erre ce", "crc"), ("ce efe ce", "cfc"), ("efe ge te esse", "fgts"),
+           ("i pe i", "ipi"), ("i ce eme esse", "icms"), ("i esse esse", "iss"), ("pe jota", "pj"),
+           ("ispedi", "sped"), ("e social", "esocial"), ("meis", "mei"), ("dase", "das")]
+_norm0 = cs.norm
+
+
+def _norm(s):
+    t = " " + " ".join(_norm0(s)) + " "
+    for a, b in _SIGLAS:
+        t = t.replace(f" {a} ", f" {b} ")
+    return t.split()
+
+
+cs.norm = _norm
+
 E = Path(sys.argv[1]).resolve()
 PAD = 0.2
 TEMPO = float(sys.argv[2]) if len(sys.argv) > 2 else 1.12  # atempo (≤1,15 para não chiar)
