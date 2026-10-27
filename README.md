@@ -1,8 +1,16 @@
 # contaviral
 
+[![contaviral — radar contábil](guia/assets/banner.jpg)](https://inematds.github.io/contaviral/guia/)
+
+**🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
+
 ## O que é
 
 O contaviral faz, sozinho, vídeos curtos (9:16) com o resumo do que os 10 maiores canais de contabilidade e tributos do YouTube disseram: novas leis e portarias, Reforma Tributária (IBS, CBS, Imposto Seletivo) e o impacto nas empresas, MEI e Simples Nacional, imposto de renda, obrigações fiscais (SPED, notas), IA nos escritórios e oportunidades para contadores. Ele assiste aos vídeos por transcrição, separa os números e os fatos com a fonte de cada um e monta um vídeo com números grandes, carimbos (MUDOU A REGRA, PROPOSTA, PRAZO, ALERTA) e o Nei comentando (avatar). Proposta é tratada como proposta, política não tem lado e nada vira conselho: não substitui orientação de um contador. Roda num computador com GPU, com a assinatura do Claude Code e do HeyGen. É irmão do [futviral](https://github.com/inematds/futviral), do [advviral](https://github.com/inematds/advviral), do [saudeviral](https://github.com/inematds/saudeviral) e do [finviral](https://github.com/inematds/finviral) (mesmo motor, outro tema).
+
+## 📖 Guia de uso
+
+Guia completo (landing + passo a passo): **https://inematds.github.io/contaviral/guia/**
 
 ## Os 10 canais
 

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>contaviral — el radar contable de YouTube en 3 minutos</title>
+<meta name="description" content="contaviral: sistema que transcribe los videos de los 10 mayores canales brasileños de contabilidad e impuestos de YouTube y arma, solo, un video 9:16 con los hechos, la fuente en pantalla y Nei comentando. Una propuesta es una propuesta y nada se convierte en consejo: no sustituye la orientación de un contador.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/contaviral/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/contaviral/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/contaviral/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🧾</span> contaviral</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">Qué es</a>
+    <a class="sec" href="#fluxo">Cómo funciona</a>
+    <a class="sec" href="#canais">Los 10 canales</a>
+    <a class="sec" href="#guia">Guía de uso</a>
+    <a class="sec" href="#regras">Reglas</a>
+    <span class="lang"><a href="../">PT</a><a href="../en/">EN</a><a class="on" href="./">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/contaviral" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Video 9:16 · Contabilidad e impuestos · automático</span>
+      <h1>Lo que dijo la contabilidad de YouTube, en <span class="amb">3 minutos</span></h1>
+      <p class="lead">Los 10 mayores canales brasileños de contabilidad e impuestos de YouTube (Reforma Tributaria, MEI, Simples, nuevas reglas y obligaciones fiscales), transcritos, verificados y resumidos en un video con la fuente en pantalla y Nei comentando.</p>
+      <div class="cta">
+        <a class="btn" href="#guia">Empezar la guía</a>
+        <a class="btn ghost" href="https://github.com/inematds/contaviral" target="_blank" rel="noopener">Ver en GitHub</a>
+      </div>
+    </div>
+    <figure><img src="../assets/banner-es.jpg" alt="Banner RADAR CONTABLE: lo que dijeron los 10 mayores canales de contabilidad de YouTube, en 9:16"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">En resumen</span>
+  <p>contaviral es un sistema que hace, solo, videos verticales (9:16) de 2 a 3 minutos con el resumen de lo que dijeron los 10 mayores canales brasileños de contabilidad e impuestos de YouTube: nuevas leyes y ordenanzas, la Reforma Tributaria brasileña (IBS y CBS, los nuevos impuestos sobre el consumo, e Imposto Seletivo, el impuesto selectivo) y su impacto en las empresas, MEI (régimen brasileño de microemprendedor individual) y Simples Nacional (régimen tributario simplificado para pequeñas empresas), obligaciones fiscales, IA en los despachos contables. "Mira" los videos a través de la transcripción, separa los hechos y los números con la fuente de cada uno y arma un video con números grandes, sellos (MUDOU A REGRA (cambió la regla), PROPOSTA (propuesta), PRAZO (plazo), ALERTA) y Nei (Nei Maldaner, creador de INEMA) comentando en avatar. Una propuesta se trata como propuesta, la política no tiene bando y nada se convierte en consejo: no sustituye la orientación de un contador. Sirve para contadores y empresarios que quieren saber, en pocos minutos, de qué están hablando los principales canales. Funciona en una computadora con GPU, con la suscripción de Claude Code y de HeyGen.</p>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">Qué es</span>
+  <h2>Un radar contable que se arma solo</h2>
+  <p class="sub">contaviral lee lo que publicaron los canales, verifica cada hecho contra la transcripción y publica un video listo. El video cuenta lo que dijo cada canal, siempre con la fuente, sin darle consejos a nadie.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="../assets/banner-grade-es.jpg" alt="Flujo de contaviral: recolección, transcripción, guion, verificación, avatar y publicación" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3">
+    <div class="card"><h3>🔎 Solo hechos con fuente</h3><p>Cada hecho o número tiene que estar en la transcripción, con el fragmento literal. Canal, fecha y título aparecen en pantalla. Ley, ordenanza, alícuota, plazo y valor solo entran tal como los dijo el canal.</p></div>
+    <div class="card"><h3>📜 Una propuesta no es una regla</h3><p>Un proyecto, una propuesta o una reglamentación pendiente aparece como PROPOSTA (propuesta), nunca como regla vigente. Todo atribuido a quien lo dijo; nada de "haz esto" para tu caso: cada caso es distinto, habla con tu contador.</p></div>
+    <div class="card"><h3>🔒 Todo con la suscripción</h3><p>Guion con <code>claude -p</code> (suscripción, sin API), transcripción local con Whisper y avatar por el estudio de HeyGen. La oferta de cambio de plan de HeyGen siempre se rechaza.</p></div>
+  </div>
+</div></section>
+
+<section id="fluxo"><div class="wrap">
+  <span class="chip">Cómo funciona</span>
+  <h2>De la transcripción a YouTube, sin mano humana en el medio</h2>
+  <p class="sub">Etapas encadenadas por <code>auto/rodar.sh</code>. Si la verificación reprueba dos veces, el video no se hace. Un día flojo tampoco se convierte en video: el bot recibe "sin tema".</p>
+  <div class="flow">
+    <span>Recolección</span><span class="arr">→</span>
+    <span>Transcripción</span><span class="arr">→</span>
+    <span>Guion</span><span class="arr">→</span>
+    <span>Verificación</span><span class="arr">→</span>
+    <span>Avatar</span><span class="arr">→</span>
+    <span>Video</span><span class="arr">→</span>
+    <span>YouTube + bot</span>
+  </div>
+  <div class="grid g3" style="margin-top:26px">
+    <div class="card"><div class="num">1</div><h3>Recolección y transcripción</h3><p>Lista los videos de los canales de <code>canais.json</code> (solo metadatos, yt-dlp), elige primero el más visto de cada canal (hasta 3 por canal, sin repetir videos ya usados y saltando videos/lives de más de 75 min), toma el subtítulo de YouTube y, si no lo hay, descarga el audio y lo transcribe localmente (inemavox, Whisper large-v3).</p></div>
+    <div class="card"><div class="num">2</div><h3>Guion</h3><p><code>claude -p</code> lee las transcripciones y graba <code>base.md</code> (cada hecho, quién lo dijo, el video y el fragmento literal), <code>roteiro.json</code> (textos hablados y visuales) y <code>legenda.txt</code>.</p></div>
+    <div class="card"><div class="num">3</div><h3>Verificación</h3><p><code>auto/checar.py</code> verifica los fragmentos en la transcripción, los números escritos en letras en el habla, al menos 5 temas, el aviso "No sustituye la orientación de un contador." y el CTA de inema.club. Si reprueba: vuelve una vez para corrección.</p></div>
+    <div class="card"><div class="num">4</div><h3>Avatar</h3><p>HeyGen genera el avatar de Nei por el estudio (suscripción). Si falla, sale la versión con la foto y la voz de Nei, que solo va al bot.</p></div>
+    <div class="card"><div class="num">5</div><h3>Video</h3><p><code>motor/palco.html</code> se renderiza cuadro a cuadro con Playwright, con contadores, sellos y la fuente en pantalla. La imagen es la miniatura del video del canal.</p></div>
+    <div class="card"><div class="num">6</div><h3>Publicación</h3><p>En la agenda, el video listo va primero al bot v3 como vista previa; a las 13:00 <code>auto/publicar-pendente.sh</code> lo publica en YouTube INEMA TIA (lives2) mediante <code>yt-pubx</code> y manda el enlace al bot.</p></div>
+  </div>
+</div></section>
+
+<section id="agenda"><div class="wrap">
+  <span class="chip">Rondas</span>
+  <h2>Tres tipos de ronda</h2>
+  <p class="sub">Cada ronda es un modo de <code>auto/rodar.sh</code>. La agenda (timers en <code>systemd/</code>) está activada: la generación corre a las 10:00 y la publicación a las 13:00, fuera de los horarios de los proyectos hermanos que usan la misma GPU y el mismo HeyGen.</p>
+  <div class="phase"><div class="tag">Diario</div><div class="d"><strong>Ronda <code>diario</code></strong><span>El resumen de los diez, 2 a 3 minutos: los videos de ayer y anteayer todavía no usados, con al menos cinco temas (uno por canal siempre que se pueda). Si menos de cinco canales publicaron en esos dos días, la ventana se amplía a cinco días.</span></div></div>
+  <div class="phase"><div class="tag">Sábado</div><div class="d"><strong>Ronda <code>semanal</code></strong><span>Balance de la semana (los 7 días hasta ayer), 2 a 3 minutos. Después, el largo 16:9 "La semana explicada" (5,5 a 7 minutos).</span></div></div>
+  <div class="phase"><div class="tag">Domingo</div><div class="d"><strong>Ronda <code>domingo</code></strong><span>Lo que los canales señalan para la próxima semana (plazos, votaciones, reglamentaciones pendientes, etapas de la Reforma), 2 a 3 minutos. Después, el largo 16:9 explicado (5,5 a 7 minutos).</span></div></div>
+</div></section>
+
+<section id="canais"><div class="wrap">
+  <span class="chip">Los 10 canales</span>
+  <h2>A quién sigue contaviral</h2>
+  <p class="sub">Elegidos el 27/10/2026 a partir de la lista de Nei, con medición propia (yt-dlp, mediana de vistas de los últimos 15 videos, canal activo y hablado). Quedaron fuera los canales inactivos, de oposiciones, de política o que venden "paga menos impuestos". Detalles en <a href="https://github.com/inematds/contaviral/blob/main/pesquisa/canais.md" target="_blank" rel="noopener"><code>pesquisa/canais.md</code></a> (en portugués).</p>
+  <div class="grid g3">
+    <div class="card"><h3>🏪 MEI y Simples</h3><p>Central do Microempreendedor, Sua Contadora, Gerando Empreendedores y Tenha Renda: límite del MEI, plazos, Simples Nacional y lo que la Receita Federal (la agencia tributaria de Brasil) está cambiando.</p></div>
+    <div class="card"><h3>🏛️ Reforma Tributaria</h3><p>Flávia Holanda Gaeta (tesis e IBS/CBS), el profesor Fellipe Guerra (Reforma y Simples) y Paulo Henrique Pêgas (serie "3MIN com Pêgas", en el canal IPECRJ TV).</p></div>
+    <div class="card"><h3>📚 Legislación y fuente oficial</h3><p>Econet Editora (legislación fiscal y laboral), Contabilidade Facilitada (rutina del contador) y Receita Federal (fuente oficial, no influencer).</p></div>
+  </div>
+</div></section>
+
+<section id="pre"><div class="wrap">
+  <span class="chip">Requisitos previos</span>
+  <h2>Lo que tiene que estar en la máquina</h2>
+  <p class="sub">contaviral no es una app aislada: usa otras herramientas del ecosistema INEMA, todas en <code>~/projetos/</code>, en una computadora con GPU. El repositorio queda en <code>~/projetos/contaviral</code> (los timers de systemd y los enlaces apuntan allí).</p>
+  <div class="grid g3">
+    <div class="card"><h3>Recolección y transcripción</h3><p><code>yt-dlp</code> para listar y descargar. <strong>inemavox</strong> (<code>~/projetos/inemavox</code>, con <code>baixar_v1.py</code> y <code>transcrever_v1.py</code>) es el kit local de descarga y transcripción con Whisper.</p></div>
+    <div class="card"><h3>Render</h3><p>Node con Playwright y ffmpeg. <code>motor/node_modules</code> es un enlace a <code>~/projetos/eventosextremospub/motor/node_modules</code>; sin ese proyecto, ejecuta <code>npm install playwright</code> en <code>motor/</code>.</p></div>
+    <div class="card"><h3>Guion</h3><p><code>claude</code> (Claude Code con sesión iniciada en la suscripción, llamado como <code>claude -p</code>). El largo de fin de semana usa el motor <code>~/projetos/explicavideos/engine/v2</code>.</p></div>
+    <div class="card"><h3>Avatar y voz</h3><p>El estudio de HeyGen abierto en un navegador en pantalla virtual (Xvfb <code>:99</code>), con el perfil ya logueado del proyecto explicavideos. Sin él, la ronda sale con la foto y la voz clonada de Nei (Chatterbox, voz <code>nei</code>, mediante el proyecto <code>~/projetos/cardshorts</code>).</p></div>
+    <div class="card"><h3>Publicación</h3><p><strong>yt-pubx</strong> (<code>~/projetos/yt-pubx</code>), la herramienta que publica en YouTube; <strong>lives2</strong> es su nombre para el canal INEMA TIA.</p></div>
+    <div class="card"><h3>Aviso en Telegram</h3><p>El <strong>bot v3</strong> es el bot de Telegram de Nei que recibe cada video y aviso, mediante el script <code>~/projetos/refazvideo/ferramentas/enviar_bot_v3.mjs</code>.</p></div>
+  </div>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Guía de uso · paso a paso</span>
+  <h2>Instalar, elegir los canales, probar y ejecutar</h2>
+  <p class="sub">Comandos reales del repositorio, ejecutados en la raíz del proyecto.</p>
+  <div class="step"><div class="b">1</div><div>
+    <h3>Descargar el proyecto y sus hermanos</h3>
+    <p>contaviral queda en <code>~/projetos/contaviral</code> y usa proyectos públicos de INEMA a su lado. También necesita <code>yt-dlp</code>, <code>ffmpeg</code>, <code>node</code> y <code>claude</code> con sesión iniciada en la suscripción.</p>
+    <pre><span class="k">cd</span> ~/projetos
+<span class="k">git clone</span> <span class="s">https://github.com/inematds/contaviral</span>
+<span class="k">for</span> r <span class="k">in</span> inemavox yt-pubx cardshorts explicavideos refazvideo eventosextremospub; <span class="k">do</span>
+  <span class="k">git clone</span> <span class="s">https://github.com/inematds/$r</span>
+<span class="k">done</span>
+<span class="k">cd</span> ~/projetos/contaviral/motor &amp;&amp; <span class="k">npm install</span> playwright &amp;&amp; <span class="k">npx playwright install</span> chromium   <span class="c"># render: Playwright + Chromium (el enlace motor/node_modules no viene en el clon)</span></pre>
+    <p>Cada hermano tiene su propio README con la configuración: las credenciales del canal en <a href="https://github.com/inematds/yt-pubx" target="_blank" rel="noopener">yt-pubx</a>, el bot de Telegram en <a href="https://github.com/inematds/refazvideo" target="_blank" rel="noopener">refazvideo</a>, el perfil del estudio HeyGen y la pantalla virtual en <a href="https://github.com/inematds/explicavideos" target="_blank" rel="noopener">explicavideos</a>, la transcripción en <a href="https://github.com/inematds/inemavox" target="_blank" rel="noopener">inemavox</a> y la voz en <a href="https://github.com/inematds/cardshorts" target="_blank" rel="noopener">cardshorts</a>. La prueba del paso 3 ya necesita inemavox, cardshorts y refazvideo; la publicación necesita todos. Para la prueba con foto, cardshorts debe estar instalado con la voz <code>nei</code> (Chatterbox, en la GPU), como en su README.</p>
+  </div></div>
+  <div class="step"><div class="b">2</div><div>
+    <h3>Elegir los canales</h3>
+    <p>La lista está en <code>canais.json</code>. Para pausar un canal sin borrarlo, usa <code>"ativo": false</code>. El <code>handle</code> es la ruta del canal en YouTube, <code>rk</code> es la etiqueta que aparece en pantalla y <code>lang</code> es el idioma del canal para Whisper (por defecto pt; los diez están en portugués).</p>
+    <pre>{<span class="s">"handle"</span>: <span class="s">"channel/UCTRVlQTzYPK88F8saQL9TJQ"</span>, <span class="s">"nome"</span>: <span class="s">"Fellipe Guerra"</span>, <span class="s">"rk"</span>: <span class="s">"REFORMA TRIBUTÁRIA · CFC"</span>, <span class="s">"lang"</span>: <span class="s">"pt"</span>, <span class="s">"ativo"</span>: true}</pre>
+    <p>Si otro canal consolidado de contabilidad o impuestos se destaca, el sistema sugiere incluirlo en el mensaje del bot (nunca un canal emergente ni quien vende cursos o "paga menos impuestos"). Solo entra con el visto bueno de Nei.</p>
+  </div></div>
+  <div class="step"><div class="b">3</div><div>
+    <h3>Probar sin avatar y sin publicar</h3>
+    <p>Ejecuta una ronda sin HeyGen, sin el largo y sin enviar nada al bot ni a YouTube. Igual usa <code>claude -p</code> (cuota de la suscripción), descarga el audio y ocupa la GPU con Whisper. La terminal queda en silencio: la salida va al log de la edición.</p>
+    <pre><span class="k">SEM_AVATAR=1 SEM_BOT=1 SEM_LONGO=1 auto/rodar.sh</span> diario   <span class="c"># prueba: sin HeyGen, sin largo y sin enviar</span>
+<span class="k">tail -f</span> edicoes/$(date +%F)-diario/rodada.log              <span class="c"># seguir</span></pre>
+    <p>En la carpeta <code>edicoes/AAAA-MM-DD-diario/</code> quedan <code>base.md</code>, <code>roteiro.json</code>, <code>legenda.txt</code>, <code>checar.log</code> y el video listo (<code>video.mp4</code>).</p>
+  </div></div>
+  <div class="step"><div class="b">4</div><div>
+    <h3>Ejecutar a mano</h3>
+    <p>Pasa el modo y la fecha. La ronda completa genera el avatar, publica en lives2 y manda al bot. Ejecútala con <code>systemd-run --user</code> (con <code>PATH</code> incluyendo <code>~/.npm-global/bin</code> y <code>DISPLAY=:99</code>), para no depender de la terminal abierta.</p>
+    <pre><span class="k">auto/rodar.sh</span> diario 2026-10-27                   <span class="c"># ronda completa (avatar + lives2 + bot)</span>
+<span class="k">SEM_AVATAR=1 auto/rodar.sh</span> diario 2026-10-27      <span class="c"># versión con foto, solo para el bot</span>
+<span class="k">REUSAR_ROTEIRO=1 auto/rodar.sh</span> diario 2026-10-27  <span class="c"># rehace avatar/video/publicación con el guion ya aprobado</span>
+<span class="k">VALIDAR=1 auto/rodar.sh</span> diario 2026-10-27        <span class="c"># edición de prueba (carpeta -validacao), nunca va a YouTube</span>
+<span class="c"># lo mismo, sin depender de la terminal abierta:</span>
+<span class="k">systemd-run</span> --user --unit contaviral-mao --setenv=PATH=$HOME/.local/bin:$HOME/.npm-global/bin:/usr/local/bin:/usr/bin:/bin --setenv=DISPLAY=:99 /bin/bash ~/projetos/contaviral/auto/rodar.sh diario 2026-10-27</pre>
+    <p class="sub" style="margin-top:10px">Una ronda manual publica en lives2 en el momento, justo después del avatar. Solo la agenda (timers) espera a las 13:00. Avatar (estudio HeyGen de Nei), el canal INEMA TIA y el bot son cuentas del dueño: quien clona usa sus propias cuentas, configuradas en los proyectos hermanos.</p>
+  </div></div>
+  <div class="step"><div class="b">5</div><div>
+    <h3>Saltar una ronda</h3>
+    <p>Agrega la fecha y el modo en <code>auto/pular.txt</code>.</p>
+    <pre><span class="k">echo</span> <span class="s">"2026-11-01 semanal"</span> &gt;&gt; auto/pular.txt   <span class="c"># saltar una ronda</span></pre>
+  </div></div>
+  <div class="step"><div class="b">6</div><div>
+    <h3>Activar la agenda y retener una publicación</h3>
+    <p>Generación a las 10:00 (diario de lunes a viernes, semanal el sábado, domingo el domingo) y publicación a las 13:00. Si el video queda listo después de las 13:00 (el estudio de HeyGen se comparte con los proyectos hermanos), sale en el horario del día siguiente, o en el momento con <code>auto/publicar-pendente.sh</code>. Copia las unidades de systemd de usuario y activa los cuatro timers. Para retener la publicación de un video que ya fue al bot como vista previa, crea el archivo <code>SEGURAR</code> en la carpeta de la edición.</p>
+    <pre><span class="k">cp</span> systemd/contaviral-* ~/.config/systemd/user/ &amp;&amp; <span class="k">systemctl</span> --user daemon-reload
+<span class="k">systemctl</span> --user enable --now contaviral-diario.timer contaviral-semanal.timer contaviral-domingo.timer contaviral-publicar.timer
+<span class="k">systemctl</span> --user list-timers <span class="s">'contaviral-*'</span>
+<span class="k">touch</span> edicoes/2026-10-27-diario/SEGURAR   <span class="c"># no publica esa edición a las 13:00</span></pre>
+  </div></div>
+  <div class="step"><div class="b">7</div><div>
+    <h3>Seguir en Telegram y en YouTube</h3>
+    <p>En la agenda, el bot v3 recibe la vista previa después de las 10:00 y el enlace de INEMA TIA (lives2) después de las 13:00. Una ronda a mano (paso 4) publica en el momento. Si no hay tema o algo falla, el bot recibe el aviso.</p>
+  </div></div>
+</div></section>
+
+<section id="regras"><div class="wrap">
+  <span class="chip">Reglas de cada video</span>
+  <h2>Lo que cumple todo video</h2>
+  <p class="sub">El guion y el portón de verificación siguen estas reglas.</p>
+  <div class="grid g3">
+    <div class="card"><h3>📌 Fuente en pantalla</h3><p>Solo entran hechos que están en la transcripción, con canal, fecha y título en pantalla y el fragmento literal en <code>base.md</code>.</p></div>
+    <div class="card"><h3>🧾 No es consejo</h3><p>"No sustituye la orientación de un contador." en todo video; el portón reprueba si falta. Cuando el habla dice lo que alguien puede hacer, cierra con "cada caso es distinto: habla con tu contador".</p></div>
+    <div class="card"><h3>📜 Una propuesta no es una regla</h3><p>Un proyecto de ley, una propuesta o una reglamentación pendiente aparece como PROPOSTA (propuesta). Ley, ordenanza, alícuota y plazo solo tal como los dijo el canal.</p></div>
+    <div class="card"><h3>⚖️ Política sin bando</h3><p>Gobierno, Congreso y elecciones: todo atribuido a quien lo dijo, sin opinión de Nei.</p></div>
+    <div class="card"><h3>🚫 Sin publicidad</h3><p>Los cursos, mentorías, despachos o sistemas del influencer no entran, y "paga menos impuestos" no se convierte en titular.</p></div>
+    <div class="card"><h3>🗣️ Tono de Nei y CTA</h3><p>Habla en el tono de Nei, directo al espectador, con los números escritos en letras. Al final, una pregunta para comentar y el CTA de inema.club.</p></div>
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">yt-dlp + Whisper</div><div class="pill">Claude Code</div><div class="pill">Playwright + ffmpeg</div><div class="pill">HeyGen (estudio)</div>
+    <p style="margin-top:18px">contaviral · no sustituye la orientación de un contador · el contenido citado pertenece a los canales de origen · licencia MIT ·
+      <a href="https://github.com/inematds/contaviral">inematds/contaviral</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='contaviral-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>
