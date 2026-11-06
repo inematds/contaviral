@@ -12,17 +12,12 @@ PL="$E/publicar-$(printf %s "$ROT" | tr -c 'A-Za-z0-9-' _).log"  # o rótulo tra
 BOT="$HOME/projetos/refazvideo/ferramentas/enviar_bot_v3.mjs"
 DRY=""; [ "${SEM_BOT:-}" = 1 ] && DRY=--dry-run
 # Publicação adiada (futviral, Nei 26/10/2026; contaviral: geração 10:00, publicação 13:00).
-# Com PUBLICAR_AS=HH:MM (vem do serviço), o vídeo pronto vai ao bot como PRÉVIA e fica pendente;
+# Com PUBLICAR_AS=HH:MM (vem do serviço), o vídeo pronto fica pendente (sem prévia no v3 desde 06/11/2026);
 # o auto/publicar-pendente.sh (timer das 13:00) publica no lives2. Ficou pronto depois das 13:00? Continua pendente e sai no timer do dia seguinte (ou rode auto/publicar-pendente.sh). Para segurar: crie <ed>/SEGURAR.
 if { [ -n "${PUBLICAR_AS:-}" ] || [ -e "$E/SEGURAR" ]; } && [ "${SEM_YT:-}" != 1 ] && [ -z "${PUBLICANDO_PENDENTE:-}" ]; then
   QUANDO="às ${PUBLICAR_AS:-13:00}"; [ -e "$E/SEGURAR" ] && QUANDO="só quando o Nei liberar (rm $E/SEGURAR e rodar auto/publicar-pendente.sh)"
   printf '%s\n%s\n%s\n' "$V" "$ROT" "$EXTRA" > "$E/PUBLICAR_PENDENTE.$(basename "$V" .mp4)"
-  VP="$V"; if [ "$(stat -c %s "$V")" -gt 48000000 ]; then VP="${V%.mp4}-720p.mp4"
-    ffmpeg -v error -y -i "$V" -vf "scale=-2:720" -c:v libx264 -crf 27 -preset medium -c:a aac -b:a 128k -movflags +faststart "$VP"; fi
-  rm -f "$VP.envio-v3.json"
-  node "$BOT" $DRY "$VP" "contaviral · PRÉVIA · $ROT
-Vai ao ar $QUANDO no lives2 (INEMA TIA). Para segurar: touch $E/SEGURAR
-$(head -c 500 "$E/legenda.txt")$EXTRA" || echo "falhou o envio da prévia"
+  # prévia não vai mais ao v3 (Nei, 06/11/2026: v3 só quando ele pedir ou der erro); para segurar: touch $E/SEGURAR
   echo "pendente: publica $QUANDO"; exit 0
 fi
 DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$V" | cut -d. -f1)
