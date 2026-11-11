@@ -29,14 +29,14 @@ Central do Microempreendedor · Sua Contadora · Flávia Holanda Gaeta · Gerand
 | 5 | Checks excerpts, numbers spelled out, 5+ topics and the notice "Não substitui orientação de um contador" (It does not replace guidance from an accountant); 1 correction | `auto/checar.py` | ⚙️ script |
 | 6 | Nei's avatar in the HeyGen studio (subscription); if it fails, Nei's photo + voice | `motor/avatar_heygen.sh` / `motor/narrar.py` | ⚙️ script |
 | 7 | Renders the video (palco.html frame by frame) and composites the avatar | `motor/gerar_cena.py` + `motor/compor_avatar.sh` | ⚙️ script |
-| 8 | Generation at 10 am: the video goes to the bot as a preview. At 1 pm it publishes to YouTube **INEMA TIA (lives2)** and sends the link to the bot (`touch <edition>/SEGURAR` holds it) | `auto/publicar.sh` + `auto/publicar-pendente.sh` (yt-pubx) | ⚙️ timer 10:00 / 13:00 |
+| 8 | Generation at 10 am: the video goes to the bot as a preview. From 12 pm the Radar Viral publishes to YouTube **Radar Viral (lives24)** and sends the link to the bot (`touch <edition>/SEGURAR` holds it) | `auto/publicar.sh` + `auto/publicar-pendente.sh` (yt-pubx) | ⚙️ timer 10:00 / 13:00 |
 | 9 | Sat/Sun: long 16:9 "A semana explicada" (The week explained) | `auto/roteiro-longo.md` → `auto/longo.sh` | 🤖 + ⚙️ |
 | 10 | Approve the format, add/remove channels, turn on the schedule | `canais.json`, `systemd/` | 🧠 session with Nei |
 
 Run by hand (always through `systemd-run --user`, with `PATH` including `~/.npm-global/bin` and `DISPLAY=:99`, as in `systemd/*.service`):
 
 ```bash
-auto/rodar.sh diario 2026-10-27                   # full run (avatar + lives2 + bot)
+auto/rodar.sh diario 2026-10-27                   # full run (avatar + lives24 + bot)
 SEM_AVATAR=1 auto/rodar.sh diario 2026-10-27      # photo version, bot only (doesn't mark videos as used)
 REUSAR_ROTEIRO=1 auto/rodar.sh diario 2026-10-27  # redo avatar/video/publishing with the script already approved
 ```

@@ -29,7 +29,7 @@ Central do Microempreendedor · Sua Contadora · Flávia Holanda Gaeta · Gerand
 | 5 | Confere trechos, números por extenso, 5+ assuntos e o aviso "Não substitui orientação de um contador"; 1 correção | `auto/checar.py` | ⚙️ script |
 | 6 | Avatar do Nei no estúdio HeyGen (assinatura); se falhar, foto + voz do Nei | `motor/avatar_heygen.sh` / `motor/narrar.py` | ⚙️ script |
 | 7 | Renderiza o vídeo (palco.html quadro a quadro) e compõe o avatar | `motor/gerar_cena.py` + `motor/compor_avatar.sh` | ⚙️ script |
-| 8 | Geração às 10h: o vídeo vai ao bot como prévia. Às 13h publica no YouTube **INEMA TIA (lives2)** e manda o link ao bot (`touch <edição>/SEGURAR` segura) | `auto/publicar.sh` + `auto/publicar-pendente.sh` (yt-pubx) | ⚙️ timer 10:00 / 13:00 |
+| 8 | Geração às 10h: o vídeo vai ao bot como prévia. A partir das 12h o Radar Viral publica no YouTube **Radar Viral (lives24)** e manda o link ao bot (`touch <edição>/SEGURAR` segura) | `auto/publicar.sh` + `auto/publicar-pendente.sh` (yt-pubx) | ⚙️ timer 10:00 / 13:00 |
 | 9 | Sáb/dom: longo 16:9 "A semana explicada" | `auto/roteiro-longo.md` → `auto/longo.sh` | 🤖 + ⚙️ |
 | 10 | Aprovar o formato, incluir/tirar canais, ligar a agenda | `canais.json`, `systemd/` | 🧠 sessão com o Nei |
 
@@ -38,12 +38,12 @@ Desde 09/11/2026 os passos pesados (Whisper, retempo, voz local, render e encode
 Rodada à mão (sempre por `systemd-run --user`, com `PATH` incluindo `~/.npm-global/bin` e `DISPLAY=:99`, como em `systemd/*.service`):
 
 ```bash
-auto/rodar.sh diario 2026-10-27                   # rodada completa (avatar + lives2 + bot)
+auto/rodar.sh diario 2026-10-27                   # rodada completa (avatar + lives24 + bot)
 SEM_AVATAR=1 auto/rodar.sh diario 2026-10-27      # versão com foto, só para o bot (não marca usados)
 REUSAR_ROTEIRO=1 auto/rodar.sh diario 2026-10-27  # refaz avatar/vídeo/publicação com o roteiro já aprovado
 ```
 
-Agenda (`systemd/contaviral-*.timer`): geração às 10:00 (diário seg–sex, semanal no sábado, domingo no domingo) e publicação às 13:00. Instalar: `cp systemd/contaviral-* ~/.config/systemd/user/ && systemctl --user daemon-reload && systemctl --user enable --now contaviral-diario.timer contaviral-semanal.timer contaviral-domingo.timer contaviral-publicar.timer`.
+Agenda (`systemd/contaviral-*.timer`): geração às 10:00 (diário seg–sex, semanal no sábado, domingo no domingo) e publicação pelo Radar Viral a partir das 12:00. Instalar: `cp systemd/contaviral-* ~/.config/systemd/user/ && systemctl --user daemon-reload && systemctl --user enable --now contaviral-diario.timer contaviral-semanal.timer contaviral-domingo.timer contaviral-publicar.timer`.
 
 ## Regras de cada vídeo
 
